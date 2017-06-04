@@ -1,14 +1,8 @@
-import { request } from 'mythic/core'
 import { a, p, h1, div } from 'mythic/markup'
-
-request({
-    method: "GET",
-    url: "/#!/api/v1/users/:id",
-    deserialize: value => value
-})
-.then(result => console.log(result))
+import page_title from 'element/core/typography/page_title'
 
 let edit = node => div(
+	page_title("James"),
     h1(node.attrs.id),
     p(a({href: "#!/home"}, "Home"))
 )

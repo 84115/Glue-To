@@ -1,8 +1,8 @@
 import { route, stream } from 'mythic/core'
 import { a, p, h1, button, ul, li, main, hr, div } from 'mythic/markup'
-import { map, inc, length, range, init, append } from 'ramda'
+import { compose, map, inc, length, range, init, append } from 'ramda'
 
-let items = stream(range(1, inc(5)))
+let items = stream(range(1, 6))
 
 let add_item = items => items(append(inc(length(items())), items()))
 
