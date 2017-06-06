@@ -10,20 +10,14 @@ let cache = {
     "producer": "N/A",
     "release_date": "0000",
     "rt_score": "0",
-    "url": "https://ghibliapi.herokuapp.com/films/2baf70d1-42bb-4437-b551-e5fed5a87abe"
-};
+    "url": "https://ghibliapi.herokuapp.com/films/2baf70d1-42bb-4437-b551-e5fed5a87abe"}
 
 let films = stream([cache])
 
-let api = curry((url, method, callback, data=null) => {
-	request({
-	    method: method,
-	    url: url,
-	    data: data
-	})
+let api = curry((url, method, callback, data=null) =>
+    request({method: method, url: url, data: data})
     .then(callback)
-    .catch(console.warn)
-})
+    .catch(console.warn))
 
 let filmApi = api('https://ghibliapi.herokuapp.com/films/', 'GET', films)
 
@@ -34,8 +28,7 @@ let film_item = film => [
     p(`Release: ${film.release_date}`),
     p(`Score: ${film.rt_score}%`),
     a({href: `${film.url}`}, 'source'),
-    hr()
-]
+    hr()]
 
 let ajaxv2 = node => main(div({class: "films"}, map(film_item, films())))
 
