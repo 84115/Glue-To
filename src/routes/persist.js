@@ -1,23 +1,8 @@
-import { stream, redraw } from 'mythic/core'
+import { stream } from 'mythic/core'
 import store from 'mythic/store'
+import persist from 'mythic/persist'
 import { main, a, div, h4, p, hr, input, label } from 'mythic/markup'
 import { curry, map, length } from 'ramda'
-
-let persist = (store) => {
-    let diff = stream(store())
-
-    return (data) => {
-        if (data && data != diff()) {
-            diff(data)
-            store(data)
-            redraw()
-
-            return data
-        }
-
-        return diff()
-    }
-};
 
 let storage = store('todos')
 let todos = persist(storage)
