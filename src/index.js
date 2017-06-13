@@ -8,6 +8,7 @@ import edit from 'routes/edit'
 import ajax from 'routes/ajax'
 import ajaxv2 from 'routes/ajax-v2'
 import demo from 'routes/demo'
+import form from 'routes/form'
 import user_api from 'routes/api/user'
 
 let routes = {
@@ -17,6 +18,7 @@ let routes = {
   "/ajax": { view: ajax },
   "/ajax-v2": { view: ajaxv2 },
   "/demo": { view: demo },
+  "/form": { view: form },
   "/edit/:id": { view: edit },
   "/api/users/:id": { view: user_api }
 }
