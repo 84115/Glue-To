@@ -1,11 +1,11 @@
 import { request, route, stream } from 'mythic/core'
 import store from 'mythic/store'
 import persist from 'mythic/persist'
-import { main, a, div, h4, p, hr, input, label } from 'mythic/markup'
-import { curry, map, length } from 'ramda'
+import { main, a, div, h4, p, hr } from 'mythic/markup'
+import { map } from 'ramda'
 import api from 'mythic/api'
 
-let movieTemplate = {
+let movieCache = [{
     "id": "0",
     "title": "N/A",
     "description": "N/A",
@@ -13,19 +13,14 @@ let movieTemplate = {
     "producer": "N/A",
     "release_date": "0000",
     "rt_score": "0",
-    "url": "https://ghibliapi.herokuapp.com/films/2baf70d1-42bb-4437-b551-e5fed5a87abe"}
+    "url": "https://ghibliapi.herokuapp.com/films/2baf70d1-42bb-4437-b551-e5fed5a87abe"}]
 
-let storage = store('movies')
-// make persist load storage if set else []
-let moviesStore = persist(storage)
-
-// moviesStore([movieTemplate])
-window.moviesStore = moviesStore
+let moviesStore = persist(store('movies'), movieCache)
 
 api('https://ghibliapi.herokuapp.com/films/', 'GET', moviesStore)
 
-let film_item = film => [
-    h4(film.title),
+let filmItem = film => [
+    h4(`${film.title}`),
     p(`Director: ${film.director}`),
     p(`Producer: ${film.producer}`),
     p(`Release: ${film.release_date}`),
@@ -33,6 +28,6 @@ let film_item = film => [
     a({href: `${film.url}`}, 'source'),
     hr()]
 
-let ajaxv2 = node => main(div({class: "films"}, map(film_item, moviesStore())))
+let ajaxV2 = node => main(div({class: "films"}, map(filmItem, moviesStore())))
 
-export default ajaxv2
+export default ajaxV2
