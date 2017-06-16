@@ -12,15 +12,14 @@ import form from 'routes/form'
 import user_api from 'routes/api/user'
 
 let routes = {
-  "": { view: stack },
-  "/stack": { view: stack },
-  "/persist": { view: persist },
-  "/ajax": { view: ajax },
-  "/ajax-v2": { view: ajaxv2 },
-  "/demo": { view: demo },
-  "/form/:id": { view: form },
-  "/edit/:id": { view: edit },
-  "/api/users/:id": { view: user_api }
-}
+    "": { view: stack },
+    "/stack": { view: stack },
+    "/persist": { view: persist },
+    "/ajax": { view: ajax },
+    "/ajax-v2": { view: ajaxv2 },
+    "/demo": { view: demo },
+    "/form/:id": { view: form },
+    "/edit/:id": { view: edit },
+    "/api/users/:id": { view: user_api }}
 
 route(dom.id('content'), keys(head(routes)), routes)

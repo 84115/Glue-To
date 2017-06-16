@@ -47,11 +47,11 @@ let submitButton = name => input({ type: "submit", value: name })
 /// ====================================
 /// Renders a editable form input
 let editable = (key, value) => div({ class: 'form-control' }, [
-	label({ for: key }, key),
-	br(),
-	input({ id: key, name: key, type: "text", value: value }),
-	br(),
-	br()])
+    label({ for: key }, key),
+    br(),
+    input({ id: key, name: key, type: "text", value: value }),
+    br(),
+    br()])
 
 
 /// filmItem :: Node -> Node
@@ -77,13 +77,13 @@ let browseFilms = (node, operator) => absolute(clamp(0, totalFilms, operator(id(
 /// ========================
 /// Render the Form content
 let formHtml = node => form({ id: 'example-form' }, [
-	h1(`Edit Film (${id(node)})`),
-	filmItem(nth(id(node), filmStore())),
-	submitButton('Save'),
-	hr(),
-	a({ href: `/?#!/form/${browseFilms(node, dec)}` }, 'prev'),
-	a({ href: `/?#!/form/${browseFilms(node, inc)}` }, 'next'),
-	a({ href: `/?#!/demo/` }, 'list')])
+    h1(`Edit Film (${id(node)})`),
+    filmItem(nth(id(node), filmStore())),
+    submitButton('Save'),
+    hr(),
+    a({ href: `/?#!/form/${browseFilms(node, dec)}` }, 'prev'),
+    a({ href: `/?#!/form/${browseFilms(node, inc)}` }, 'next'),
+    a({ href: `/?#!/demo/` }, 'list')])
 
 
 export default formHtml
