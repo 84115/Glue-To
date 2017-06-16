@@ -18,7 +18,7 @@ let routes = {
   "/ajax": { view: ajax },
   "/ajax-v2": { view: ajaxv2 },
   "/demo": { view: demo },
-  "/form": { view: form },
+  "/form/:id": { view: form },
   "/edit/:id": { view: edit },
   "/api/users/:id": { view: user_api }
 }

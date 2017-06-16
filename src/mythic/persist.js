@@ -1,9 +1,12 @@
 import { stream, redraw } from 'mythic/core'
 
-let persist = (store, cache=[]) => {
+let persist = (store, cache=false) => {
     let diff = stream(store())
 
-    if (cache) diff(cache)
+    if (cache) {
+        diff(cache)
+        redraw()
+    }
 
     return (data) => {
         if (data && data != diff()) {
