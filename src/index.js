@@ -11,6 +11,7 @@ import ajaxv2 from 'routes/ajax-v2'
 import demo from 'routes/demo'
 import form from 'routes/form'
 import user_api from 'routes/api/user'
+import Maybe from 'maybe'
 
 let routes = {
     "": { view: stack },
@@ -23,5 +24,18 @@ let routes = {
     "/form/:id": { view: form },
     "/edit/:id": { view: edit },
     "/api/users/:id": { view: user_api }}
+
+console.log(true, Maybe(true), Maybe(true).isJust(), Maybe(true).isNothing())
+console.log(false, Maybe(false), Maybe(false).isJust(), Maybe(false).isNothing())
+console.log(null, Maybe(null), Maybe(null).isJust(), Maybe(null).isNothing())
+console.log(undefined, Maybe(undefined), Maybe(undefined).isJust(), Maybe(undefined).isNothing())
+console.log(NaN, Maybe(NaN), Maybe(NaN).isJust(), Maybe(NaN).isNothing())
+console.log(0, Maybe(0), Maybe(0).isJust(), Maybe(0).isNothing())
+console.log(1, Maybe(1), Maybe(1).isJust(), Maybe(1).isNothing())
+console.log([], Maybe([]), Maybe([]).isJust(), Maybe([]).isNothing())
+console.log([0], Maybe([0]), Maybe([0]).isJust(), Maybe([0]).isNothing())
+console.log([1], Maybe([1]), Maybe([1]).isJust(), Maybe([1]).isNothing())
+console.log("", Maybe(""), Maybe("").isJust(), Maybe("").isNothing())
+console.log("a", Maybe("a"), Maybe("a").isJust(), Maybe("a").isNothing())
 
 route(dom.id('content'), keys(head(routes)), routes)
