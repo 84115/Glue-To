@@ -1,31 +1,42 @@
-import { request, route, stream } from 'mythic/core'
-import { main, a, div, h4, p, hr } from 'mythic/markup'
+import { stream } from 'mythic/core'
+import { main, button, a, div, h3, h4, p, hr } from 'mythic/markup'
 import api from 'mythic/api'
-import { curry, map } from 'ramda'
+import { map, indexBy, prop, values } from 'ramda'
 
-let cache = {
-    "id": "0",
-    "title": "N/A",
-    "description": "N/A",
-    "director": "N/A",
-    "producer": "N/A",
-    "release_date": "0000",
+
+/// streamFilm :: Stream
+/// ====================
+let cache = [{
+    "id": "...",
+    "title": "...",
+    "description": "...",
+    "director": "...",
+    "producer": "...",
+    "release_date": "...",
     "rt_score": "0",
-    "url": "https://ghibliapi.herokuapp.com/films/2baf70d1-42bb-4437-b551-e5fed5a87abe"}
+    "url": "..."}]
 
-let films = stream([cache])
+let streamFilm = stream(cache)
 
-let filmApi = api('https://ghibliapi.herokuapp.com/films/', 'GET', films)
+api('https://ghibliapi.herokuapp.com/films/', 'GET', data => streamFilm(indexBy(prop('id'), data)))
 
-let film_item = film => [
+/// nodeFilm :: Node -> Node
+/// ========================
+let nodeFilm = film => [
     h4(film.title),
     p(`Director: ${film.director}`),
     p(`Producer: ${film.producer}`),
     p(`Release: ${film.release_date}`),
     p(`Score: ${film.rt_score}%`),
-    a({href: `${film.url}`}, 'source'),
+    p(`Description: ${film.description}`),
+    p(a({href: `${film.url}`}, 'source')),
+    p(a({href: `/?#!/form/${film.id}`}, 'edit')),
     hr()]
 
-let ajaxv2 = node => main(div({class: "films"}, map(film_item, films())))
+let ajaxv2 = node => main([
+    h3("Browse Films"),
+    p(button({ onclick: console.log }, "fetch")),
+    hr(),
+    div({ class: "films" }, map(nodeFilm, values(streamFilm())))])
 
 export default ajaxv2

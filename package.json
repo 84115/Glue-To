@@ -5,7 +5,6 @@
   "main": "src/index.js",
   "scripts": {
     "start": "gulp",
-    "production": "gulp --production"
     "production": "gulp --production",
     "test": "jasmine"
   },
@@ -31,14 +30,14 @@
     "yargs": "^4.6.0",
     "jasmine": "^2.6.0",
     "mithril": "latest",
-    "mithril-stream ": "latest",
+    "mithril-stream": "latest",
     "ramda": "latest"
-    "ramda": "latest",
-    "vinyl-source-stream": "^1.1.0",
-    "yargs": "^4.6.0"
   },
   "bugs": {
     "url": "https://github.com/84115/fn-dom/issues"
   },
-  "homepage": "https://github.com/84115/fn-dom#readme"
+  "homepage": "https://github.com/84115/fn-dom#readme",
+  "dependencies": {
+    "maybe": "0.0.2"
+  }
 }

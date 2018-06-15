@@ -1,40 +1,32 @@
-import { head, map, nth, inc, dec, clamp, length, curry } from 'ramda'
-import { h1, br, form, input, label, div, option, select, main, a, h4, p, hr } from 'mythic/markup'
-import { capitalise } from 'mythic/string'
+import { map, nth, curry, filter, propEq, indexBy, prop, when, defaultTo, mapObjIndexed, values, omit } from 'ramda'
+import { h3, br, form, input, label, div, option, select, main, a, h5, p, hr } from 'mythic/markup'
+import { stream, redraw } from 'mythic/core'
 import api from 'mythic/api'
 import store from 'mythic/store'
 import persist from 'mythic/persist'
+
+let lex = (callback, ...data) => callback(...data)
 
 
 /// attr :: Node -> Attribute -> String
 /// ===================================
 /// Returns an Attribute from a Node
-let attr = curry((node, attr) => node.attrs[attr])
+let attr = curry((attr, node) => node.attrs[attr])
 
 
 /// id :: Node -> String
 /// ====================
 /// Shorthand for reading
 /// a Node 'id' Attribute
-let id = node => attr(node, 'id')
+let id = node => attr('id', node)
 
 
-/// absolute :: Interger -> Interger
-/// ================================
-/// Converts an interger
-/// into its absolute value
-let absolute = Math.abs
+/// streamFilm :: Stream
+/// ====================
+let streamFilm = stream({})
 
-
-/// filmStore :: Persist
-/// ======================
-let filmStore = persist(store('films'))
-
-
-/// totalFilms :: Interger
-/// =======================
-/// Gets the counts of films
-let totalFilms = length(filmStore())
+api('https://ghibliapi.herokuapp.com/films/', 'GET', data =>
+    streamFilm(indexBy(prop('id'), data)))
 
 
 /// submitButton :: String -> Node
@@ -54,36 +46,31 @@ let editable = (key, value) => div({ class: 'form-control' }, [
     br()])
 
 
-/// filmItem :: Node -> Node
+/// nodeFilm :: Node -> Node
 /// ========================
 /// Renders an editable
 /// film component
-let filmItem = film => [
-    editable('Film', film.title),
-    editable('Director', film.director),
-    editable('Producer', film.producer),
-    editable('Release', film.release_date),
-    editable('Score', film.rt_score),
-    editable('Url', film.url)]
+let nodeFilm = film => values(mapObjIndexed((value, key) =>
+    editable(key, value), omit(['id', 'people', 'species', 'locations', 'vehicles', 'url'], film)))
 
-
-/// browseFilms :: (Node, Function) -> String
-/// ==========================================
-/// This function is difficult to read
-let browseFilms = (node, operator) => absolute(clamp(0, totalFilms, operator(id(node))))
+let nodeStream = (a, b, data) => (data ? a(data) : b)
 
 
 /// formHtml :: Node -> Node
 /// ========================
 /// Render the Form content
-let formHtml = node => form({ id: 'example-form' }, [
-    h1(`Edit Film (${id(node)})`),
-    filmItem(nth(id(node), filmStore())),
-    submitButton('Save'),
-    hr(),
-    a({ href: `/?#!/form/${browseFilms(node, dec)}` }, 'prev'),
-    a({ href: `/?#!/form/${browseFilms(node, inc)}` }, 'next'),
-    a({ href: `/?#!/demo/` }, 'list')])
+let formHtml = node => form({ id: 'example-form' }, div([
+    h3("Edit Film"),
+    h5(id(node)),
+    // lex(film => film ? nodeFilm(film) : div("..."),
+    //     prop(id(node), streamFilm())),
+    nodeStream(
+        nodeFilm,
+        div("..."),
+        prop(id(node), streamFilm())),
+    submitButton("Save"),
+    p(a({ href: "/?#!/ajax/" }, "list"))
+    ]))
 
 
 export default formHtml
