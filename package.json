@@ -38,6 +38,7 @@
   },
   "homepage": "https://github.com/84115/fn-dom#readme",
   "dependencies": {
+    "faker": "^4.1.0",
     "maybe": "0.0.2"
   }
 }

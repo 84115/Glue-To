@@ -8,10 +8,13 @@ import form from 'routes/form'
 
 import ajaxv2 from 'routes/ajax-v2'
 
+import svg from 'routes/svg'
+
 router(document.getElementById('content'), {
     "": ajaxv2,
     "/stack": stack,
     "/edit/:id": edit,
     "/ajax": ajaxv2,
-    "/form/:id": form
+    "/form/:id": form,
+    "/svg": svg
 })

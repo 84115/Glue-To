@@ -1,6 +1,6 @@
-import { map, nth, curry, filter, propEq, indexBy, prop, when, defaultTo, mapObjIndexed, values, omit } from 'ramda'
+import { map, nth, curry, filter, propEq, indexBy, prop, when, defaultTo, mapObjIndexed, values, omit, objOf } from 'ramda'
 import { h3, br, form, input, label, div, option, select, main, a, h5, p, hr } from 'mythic/markup'
-import { stream, redraw } from 'mythic/core'
+import { stream, redraw, node } from 'mythic/core'
 import api from 'mythic/api'
 import store from 'mythic/store'
 import persist from 'mythic/persist'
@@ -29,10 +29,10 @@ api('https://ghibliapi.herokuapp.com/films/', 'GET', data =>
     streamFilm(indexBy(prop('id'), data)))
 
 
-/// submitButton :: String -> Node
-/// ==============================
+/// submit :: String -> Node
+/// ========================
 /// Renders a form submit
-let submitButton = name => input({ type: "submit", value: name })
+let submit = name => input({ type: "submit", value: name })
 
 
 /// editable :: (String, String) -> Node
@@ -46,31 +46,41 @@ let editable = (key, value) => div({ class: 'form-control' }, [
     br()])
 
 
-/// nodeFilm :: Node -> Node
+/// filmNode :: Node -> Node
 /// ========================
 /// Renders an editable
 /// film component
-let nodeFilm = film => values(mapObjIndexed((value, key) =>
+let filmNode = film => values(mapObjIndexed((value, key) =>
     editable(key, value), omit(['id', 'people', 'species', 'locations', 'vehicles', 'url'], film)))
 
-let nodeStream = (a, b, data) => (data ? a(data) : b)
+
+/// ifElse :: a, b, data -> c | b
+/// =============================
+/// ...
+let ifElse = (a, b, data) => (data ? a(data) : b)
 
 
-/// formHtml :: Node -> Node
+let route = curry((path, label) => a({
+    href: "/?#!/" + path + "/",
+    title: label
+}, label))
+
+
+/// formNode :: Node -> Node
 /// ========================
 /// Render the Form content
-let formHtml = node => form({ id: 'example-form' }, div([
+let formNode = node => form({ id: 'example-form' }, lex(nid => div([
     h3("Edit Film"),
-    h5(id(node)),
-    // lex(film => film ? nodeFilm(film) : div("..."),
-    //     prop(id(node), streamFilm())),
-    nodeStream(
-        nodeFilm,
-        div("..."),
-        prop(id(node), streamFilm())),
-    submitButton("Save"),
-    p(a({ href: "/?#!/ajax/" }, "list"))
-    ]))
+    h5(nid),
+    ifElse(
+        filmNode,
+        div(p("Loading...")),
+        prop(nid, streamFilm())),
+    submit("Save"),
+    p(route("ajax", "View All"))
+    ]), id(node)))
 
 
-export default formHtml
+////// Node
+////// ====
+export default formNode

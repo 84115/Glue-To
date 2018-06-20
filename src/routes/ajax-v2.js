@@ -20,9 +20,9 @@ let streamFilm = stream(cache)
 
 api('https://ghibliapi.herokuapp.com/films/', 'GET', data => streamFilm(indexBy(prop('id'), data)))
 
-/// nodeFilm :: Node -> Node
+/// filmNode :: Node -> Node
 /// ========================
-let nodeFilm = film => [
+let filmNode = film => [
     h4(film.title),
     p(`Director: ${film.director}`),
     p(`Producer: ${film.producer}`),
@@ -37,6 +37,6 @@ let ajaxv2 = node => main([
     h3("Browse Films"),
     p(button({ onclick: console.log }, "fetch")),
     hr(),
-    div({ class: "films" }, map(nodeFilm, values(streamFilm())))])
+    div({ class: "films" }, map(filmNode, values(streamFilm())))])
 
 export default ajaxv2
