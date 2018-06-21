@@ -10,11 +10,14 @@ import ajaxv2 from 'routes/ajax-v2'
 
 import svg from 'routes/svg'
 
+import faker from 'routes/faker'
+
 router(document.getElementById('content'), {
     "": ajaxv2,
     "/stack": stack,
     "/edit/:id": edit,
     "/ajax": ajaxv2,
     "/form/:id": form,
-    "/svg": svg
+    "/svg": svg,
+    "/faker": faker
 })
