@@ -1,23 +1,13 @@
-import { router } from 'mythic/core'
+import { route } from 'mythic/core'
+import * as to from './routes';
 
-import stack from 'routes/stack'
-import edit from 'routes/edit'
-
-import demo from 'routes/demo'
-import form from 'routes/form'
-
-import ajaxv2 from 'routes/ajax-v2'
-
-import svg from 'routes/svg'
-
-import faker from 'routes/faker'
-
-router(document.getElementById('content'), {
-    "": ajaxv2,
-    "/stack": stack,
-    "/edit/:id": edit,
-    "/ajax": ajaxv2,
-    "/form/:id": form,
-    "/svg": svg,
-    "/faker": faker
-})
+route(document.getElementById('content'), {
+    "": to.AjaxV2,
+    "/stack": to.Stack,
+    "/edit/:id": to.Edit,
+    "/ajax": to.AjaxV2,
+    "/form/:id": to.Form,
+    "/svg": to.Svg,
+    "/faker": to.Faker,
+    "/table": to.Table
+    })

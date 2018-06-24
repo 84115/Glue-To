@@ -35,13 +35,11 @@ function isProduction() {
  * Logs the current build mode on the console.
  */
 function logBuildMode() {
-    
     if (isProduction()) {
         gutil.log(gutil.colors.green('Running production build...'));
     } else {
         gutil.log(gutil.colors.yellow('Running development build...'));
     }
-
 }
 
 /**
@@ -77,7 +75,6 @@ function copyStatic() {
  * but have different task dependencies.
  */
 function build() {
-
     var sourcemapPath = SCRIPTS_PATH + '/' + OUTPUT_FILE + '.map';
     logBuildMode();
 
@@ -88,7 +85,8 @@ function build() {
             transform: [
                 [
                     babelify, {
-                        presets: ["es2015"]
+                        presets: ["es2015"],
+                        plugins: ["wildcard"]
                     }
                 ]
             ]
@@ -103,7 +101,6 @@ function build() {
         .pipe(buffer())
         .pipe(gulpif(isProduction(), uglify()))
         .pipe(gulp.dest(SCRIPTS_PATH));
-
 }
 
 /**
@@ -111,7 +108,6 @@ function build() {
  * Watches for file changes in the 'src' folder.
  */
 function serve() {
-    
     var options = {
         server: {
             baseDir: BUILD_PATH
@@ -128,7 +124,6 @@ function serve() {
     gulp.watch(STATIC_PATH + '/**/*', ['watch-static']).on('change', function() {
         keepFiles = true;
     });
-
 }
 
 
@@ -142,9 +137,6 @@ gulp.task('watch-static', browserSync.reload);
 
 /**
  * The tasks are executed in the following order:
- * 'cleanBuild' -> 'copyStatic' -> 'copyPhaser' -> 'build' -> 'serve'
- * 
- * Read more about task dependencies in Gulp: 
- * https://medium.com/@dave_lunny/task-dependencies-in-gulp-b885c1ab48f0
+ * 'cleanBuild' -> 'copyStatic' -> 'build' -> 'serve'
  */
 gulp.task('default', ['serve']);

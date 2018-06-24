@@ -1,4 +1,4 @@
-import { route, stream, redraw } from 'mythic/core'
+import { stream, redraw } from 'mythic/core'
 import api from 'mythic/api'
 import { div, h2, p, hr, img } from 'mythic/markup'
 import { map, identity, times } from 'ramda'
