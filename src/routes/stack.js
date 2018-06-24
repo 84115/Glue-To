@@ -1,17 +1,42 @@
-import { route, stream } from 'mythic/core'
-import { a, p, h1, button, ul, li, main, hr, div } from 'mythic/markup'
-import { compose, map, inc, length, range, init, append } from 'ramda'
+import store from 'mythic/store'
+import { a, p, h1, button, ul, li, main, hr, div, route } from 'mythic/markup'
+import { compose, map, inc, length, range, init, append, objOf } from 'ramda'
 
-let items = stream(range(1, 6))
 
-let add_item = items => items(append(inc(length(items())), items()))
+/// stack -> Object
+/// ===============
+let stack = store('stack')
 
-let remove_item = items => items(init(items()))
 
-let home = node => main([
-    h1({class: "title"}, a({href: "#!/home"}, `Stack: ${length(items())}`)),
-    button({onclick: () => add_item(items)}, "Add List Item"),
-    button({onclick: () => remove_item(items)}, "Remove List Item"),
-    ul({ class: "list"}, map(item => li(a({href: `#!/edit/${item}`}, item)), items()))])
+/// onClick -> Object
+/// =================
+let onClick = objOf("onclick")
 
-export default home
+
+/// className -> Object
+/// ===================
+let className = objOf("class")
+
+
+/// push :: Event -> Store
+/// ======================
+let push = event => stack(append(inc(length(stack())), stack()))
+
+
+/// pop :: Event -> Store
+/// =====================
+let pop = event => stack(init(stack()))
+
+
+/// stackNode :: Node -> Node
+/// =========================
+/// Render the Stack data...
+let homeNode = node => main([
+    h1(className("title"), `Stack: ${length(stack())}`),
+    button(onClick(push), "Add List Item"),
+    button(onClick(pop), "Remove List Item"),
+    ul(className("list"), map(item =>
+        li(route(`edit/${item}`, item)), stack()))])
+
+
+export default homeNode

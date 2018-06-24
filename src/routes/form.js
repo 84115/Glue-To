@@ -1,8 +1,7 @@
-import { map, nth, curry, filter, propEq, indexBy, prop, when, defaultTo, mapObjIndexed, values, omit, objOf } from 'ramda'
-import { h3, br, form, input, label, div, option, select, main, a, h5, p, hr } from 'mythic/markup'
+import { map, nth, curry, filter, propEq, indexBy, prop, when, defaultTo, mapObjIndexed, values, omit, objOf, compose } from 'ramda'
+import { h3, br, form, input, label, div, option, select, main, a, h5, p, hr, route } from 'mythic/markup'
 import { stream, redraw, node } from 'mythic/core'
 import api from 'mythic/api'
-import store from 'mythic/store'
 import persist from 'mythic/persist'
 
 let lex = (callback, ...data) => callback(...data)
@@ -58,12 +57,6 @@ let filmNode = film => values(mapObjIndexed((value, key) =>
 /// =============================
 /// ...
 let ifElse = (a, b, data) => (data ? a(data) : b)
-
-
-let route = curry((path, label) => a({
-    href: "/?#!/" + path + "/",
-    title: label
-}, label))
 
 
 /// formNode :: Node -> Node

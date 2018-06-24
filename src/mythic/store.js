@@ -9,7 +9,7 @@ let jsonStringify = bind(JSON.stringify, JSON)
 let read = key => jsonParse(storageGet(key) || '[]')
 
 let write = (key, data) => {
-    localStorage.setItem(key, jsonStringify(data))
+    storageSet(key, jsonStringify(data))
 
     return read(key)
 }

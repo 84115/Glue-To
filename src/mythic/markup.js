@@ -128,6 +128,11 @@ let wbr = tag('wbr')
 let svg = tag('svg')
 let circle = tag('circle')
 
+let route = (path, label) => a({
+    href: "/?#!/" + path + "/",
+    title: label,
+}, label)
+
 export {
 	tag,
 
@@ -151,6 +156,8 @@ export {
 	u, ul,
 	variable, video,
 	wbr,
+
+	route,
 
 	svg, circle
 }

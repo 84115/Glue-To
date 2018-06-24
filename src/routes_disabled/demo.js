@@ -22,7 +22,7 @@ let filmCache = [{
 /// filmStore :: Node -> Attribute -> String
 /// ========================================
 /// ...
-let filmStore = persist(store('films'), filmCache)
+let filmStore = store('films', filmCache)
 
 
 /// api :: String -> String -> Stream -> Stream
@@ -51,4 +51,4 @@ let filmItem = film => [
 let ajaxV2 = node => main(div({class: "films"}, map(filmItem, filmStore())))
 
 
-export default ajaxV2
+export default node => main("...")
