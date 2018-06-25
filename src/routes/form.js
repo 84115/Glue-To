@@ -3,6 +3,7 @@ import { h3, br, form, input, label, div, option, select, main, a, h5, p, hr, ro
 import { stream, redraw, node } from 'mythic/core'
 import api from 'mythic/api'
 import persist from 'mythic/persist'
+import i18n from "mythic/i18n"
 
 let lex = (callback, ...data) => callback(...data)
 
@@ -67,10 +68,10 @@ let formNode = node => form({ id: 'example-form' }, lex(nid => div([
     h5(nid),
     ifElse(
         filmNode,
-        div(p("Loading...")),
+        div(p(i18n("shared.loading"))),
         prop(nid, streamFilm())),
-    submit("Save"),
-    p(route("ajax", "View All"))
+    submit(i18n("shared.save")),
+    p(route("ajax", i18n("shared.view-all")))
     ]), id(node)))
 
 
