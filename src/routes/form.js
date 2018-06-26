@@ -1,4 +1,5 @@
 import { map, nth, curry, filter, propEq, indexBy, prop, when, defaultTo, mapObjIndexed, values, omit, objOf, compose } from 'ramda'
+import store from 'mythic/store'
 import { h3, br, form, input, label, div, option, select, main, a, h5, p, hr, route } from 'mythic/markup'
 import { stream, redraw, node } from 'mythic/core'
 import api from 'mythic/api'
@@ -23,10 +24,8 @@ let id = node => attr('id', node)
 
 /// streamFilm :: Stream
 /// ====================
-let streamFilm = stream({})
-
-api('https://ghibliapi.herokuapp.com/films/', 'GET', data =>
-    streamFilm(indexBy(prop('id'), data)))
+// let streamFilm = stream({})
+let streamFilm = store('film')
 
 
 /// submit :: String -> Node
@@ -74,6 +73,7 @@ let formNode = node => form({ id: 'example-form' }, lex(nid => div([
     p(route("ajax", i18n("shared.view-all")))
     ]), id(node)))
 
+window.stream1 = streamFilm
 
 ////// Node
 ////// ====

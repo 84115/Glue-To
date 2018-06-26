@@ -9,7 +9,7 @@ import i18n from "mythic/i18n"
 let onClick = objOf("onclick")
 
 
-// let streamFilm = stream([])
+// let streamFilm = stream({})
 let streamFilm = store('film')
 
 
@@ -30,7 +30,8 @@ let filmNode = film => [
 let ajaxv2 = node => main([
     h3(i18n("film.heading.title")),
     p(button(onClick(event =>
-        api("https://ghibliapi.herokuapp.com/films/", "GET", compose(prop("id"), indexBy, streamFilm))), i18n("film.button.fetch"))),
+        api("https://ghibliapi.herokuapp.com/films/", "GET", data =>
+            streamFilm(indexBy(prop('id'), data)))), i18n("film.button.fetch"))),
     hr(),
     div({ class: "films" }, map(filmNode, values(streamFilm())))])
 
