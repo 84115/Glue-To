@@ -1,7 +1,7 @@
 export default {
     "shared.menu": "Speisekarte",
     "shared.loading": "Wird geladen...", 
-    "shared.save": "sparen",
+    "shared.save": "Sparen",
     "shared.view-all": "Alle ansehen",
 
     "stack.heading.title": "Stapelanzahl",
@@ -16,6 +16,7 @@ export default {
     "film.text.release": "Freigegeben",
     "film.text.score": "Ergebnis",
     "film.text.description": "Zusammenfassung",
+    "film.text.not-found": "Film kann nicht gefunden werden.",
     "film.link.source": "API",
     "film.link.edit": "Bearbeiten",
 }

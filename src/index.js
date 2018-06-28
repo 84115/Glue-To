@@ -10,5 +10,6 @@ route(document.getElementById('content'), {
     "/svg": to.Svg,
     "/faker": to.Faker,
     "/table": to.Table,
-    "/todo": to.Todo
+    "/todo": to.Todo,
+    "/conf": to.Conf
     })

@@ -16,6 +16,7 @@ export default {
     "film.text.release": "Released",
     "film.text.score": "Score",
     "film.text.description": "Summary",
+    "film.text.not-found": "Film cannot be found.",
     "film.link.source": "API",
     "film.link.edit": "Edit",
 }

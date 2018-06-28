@@ -67,13 +67,12 @@ let formNode = node => form({ id: 'example-form' }, lex(nid => div([
     h5(nid),
     ifElse(
         filmNode,
-        div(p(i18n("shared.loading"))),
+        div(p(i18n("film.text.not-found"))),
         prop(nid, streamFilm())),
     submit(i18n("shared.save")),
     p(route("ajax", i18n("shared.view-all")))
     ]), id(node)))
 
-window.stream1 = streamFilm
 
 ////// Node
 ////// ====

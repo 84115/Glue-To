@@ -16,6 +16,7 @@ export default {
     "film.text.release": "Libéré",
     "film.text.score": "But",
     "film.text.description": "Résumé",
+    "film.text.not-found": "Le film ne peut pas être trouvé.",
     "film.link.source": "API",
     "film.link.edit": "modifier",
 }
