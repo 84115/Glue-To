@@ -32,7 +32,7 @@ let pop = event => stack(init(stack()))
 /// =========================
 /// Render the Stack data...
 let homeNode = node => main([
-    h1(className("title"), i18n("stack.heading.title") + `: ${length(stack())}`),
+    h1(className("title"), `${i18n("stack.heading.title")}: ${length(stack())}`),
     button(onClick(push), i18n("stack.button.add")),
     button(onClick(pop), i18n("stack.button.remove")),
     ul(className("list"), map(item =>

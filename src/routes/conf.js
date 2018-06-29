@@ -6,21 +6,6 @@ import i18n from "mythic/i18n"
 
 let env = store('env')
 
-if (!(env().core) || !(env().core.dummy))
-{
-	let opts = {
-		"user": {
-			"uuid": "a6d64873-abe1-4a76-b249-8eef970184ff",
-			"firstname": "Joe",
-			"surname": "Bloggs",
-			"age": 32
-		}
-	}
-	env(merge(env(), opts))
-}
-
-
-
 let lex = (callback, ...data) => callback(...data)
 
 
@@ -39,11 +24,14 @@ let editable = (key, value, group) => div({ class: 'form-control' }, [
     		let path = (group + "-" + key).split('-')
 			let diff = assocPath(path, value, env())
 
+			console.log(path, value, diff, env())
+
 			env(merge(env(), diff))
     	})
     }),
     br(),
-    br()])
+    br()
+    ])
 
 
 /// submit :: String -> Node

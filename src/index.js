@@ -3,7 +3,8 @@ import * as to from './routes'
 
 route(document.getElementById('content'), {
     "/stack": to.Stack,
-    "/edit/:id": to.Edit,
+    "/user": to.User,
+    "/user/:id": to.User,
     "/ajax": to.AjaxV2,
     "/form/:id": to.Form,
     "/people/:field/:job": to.Form,
