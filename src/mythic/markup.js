@@ -1,4 +1,5 @@
 import m from 'mithril'
+import { objOf } from 'ramda'
 
 let tag = (element) => (attr, child) => m(element, attr, child)
 
@@ -125,13 +126,19 @@ let variable = tag('var')
 let video = tag('video')
 let wbr = tag('wbr')
 
-let svg = tag('svg')
-let circle = tag('circle')
-
 let route = (path, label) => a({
     href: "/?#!/" + path + "/",
     title: label,
 }, label)
+
+let svg = tag('svg')
+let circle = tag('circle')
+let ellipse = tag('ellipse')
+let line = tag('line')
+let path = tag('path')
+let polygon = tag('polygon')
+let polyline = tag('polyline')
+let rect = tag('rect')
 
 export {
 	tag,
@@ -159,5 +166,6 @@ export {
 
 	route,
 
-	svg, circle
+	svg,
+	circle, ellipse, line, path, polygon, polyline, rect
 }

@@ -1,7 +1,15 @@
 import m from 'mithril'
+
+import store from "mythic/store"
+import i18n from "mythic/i18n"
+import persist from 'mythic/persist'
+import api from "mythic/api"
+
 import stream from 'mithril-stream'
-import { map, objOf, merge, keys, replace } from 'ramda'
+
+import { curry, map, objOf, merge, keys, replace } from 'ramda'
 import { ul, li, a } from 'mythic/markup'
+
 
 let node = m
 let mount = node.mount
@@ -17,4 +25,22 @@ let route = (element, routes) =>
 		objOf("view"),
 		merge(objOf("", mapGenNode(routes)), routes)))
 
-export { node, mount, redraw, request, route, stream }
+let lex = (callback, ...data) => callback(...data)
+
+
+/// attr :: Node -> Attribute -> String
+/// ===================================
+/// Returns an Attribute from a Node
+let attr = curry((attr, node) => node.attrs[attr])
+
+
+/// nodeIfElse :: a, b, data -> c | b
+/// =================================
+/// ...
+let nodeIfElse = (a, b, data) => (data ? a(data) : b)
+
+
+let http = api
+
+
+export { node, mount, redraw, request, route, stream, persist, store, i18n, lex, attr, http, nodeIfElse }

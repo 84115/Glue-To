@@ -1,12 +1,10 @@
-import { a, p, h1, h2, h3, h4, h5, h6, div, route } from 'mythic/markup'
-import store from "mythic/store"
+import { p, h1, h2, h3, h4, h5, h6, div, route } from 'mythic/markup'
+import { store, lex } from "mythic/core"
 import { has, merge, prop, objOf } from 'ramda'
-
-let lex = (callback, ...data) => callback(...data)
 
 let defineEnv = (key, opts, store) =>
 	(!has(key, store()) ?
-		store(merge(env(), objOf(key, opts))) :
+		store(merge(store(), objOf(key, opts))) :
 		undefined)
 
 let env = store('env')

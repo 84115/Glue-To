@@ -1,5 +1,4 @@
-import { stream, redraw } from 'mythic/core'
-import api from 'mythic/api'
+import { stream, redraw, api } from 'mythic/core'
 import { div, h2, p, hr, img } from 'mythic/markup'
 import { map, identity, times } from 'ramda'
 import faker from 'faker'

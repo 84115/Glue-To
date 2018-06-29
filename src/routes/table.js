@@ -1,11 +1,7 @@
 import { node, route, stream } from 'mythic/core'
 import faker from 'faker'
 
-import {
-	table, thead, tfoot, tbody, tr, th, td,
-	div,
-	select, option,
-	button } from 'mythic/markup'
+import { table, thead, tfoot, tbody, tr, th, td, div, button } from 'mythic/markup'
 
 import {
 	filter,
@@ -15,8 +11,7 @@ import {
 	prop, propEq,
 	sortBy,
 	times,
-	values,
-	unary } from 'ramda'
+	values } from 'ramda'
 
 let onClick = objOf("onclick")
 let onChange = objOf("onchange")
@@ -56,10 +51,7 @@ let tableNode = node =>
 		table([
 			thead(sortableNodeGen(th)),
 			tfoot(sortableNodeGen(td)),
-			tbody(map(personNode, people()))]),
-		// select(onChange(e =>
-		// 	(faker.locale = e.target.value) & people(peopleGen())),
-		// 	map(option, keys(faker.locales)))
+			tbody(map(personNode, people()))])
 		])
 
 export default tableNode

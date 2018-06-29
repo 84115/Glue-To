@@ -1,7 +1,6 @@
-import store from 'mythic/store'
+import { store, i18n } from 'mythic/core'
 import { a, p, h1, button, ul, li, main, hr, div, route } from 'mythic/markup'
-import { compose, map, inc, length, range, init, append, objOf } from 'ramda'
-import i18n from "mythic/i18n"
+import { map, inc, length, init, append, objOf } from 'ramda'
 
 /// stack -> Object
 /// ===============

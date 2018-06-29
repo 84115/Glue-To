@@ -1,30 +1,10 @@
-import { map, nth, curry, filter, propEq, indexBy, prop, when, defaultTo, mapObjIndexed, values, omit, objOf, compose } from 'ramda'
-import store from 'mythic/store'
-import { h3, br, form, input, label, div, option, select, main, a, h5, p, hr, route } from 'mythic/markup'
-import { stream, redraw, node } from 'mythic/core'
-import api from 'mythic/api'
-import persist from 'mythic/persist'
-import i18n from "mythic/i18n"
-
-let lex = (callback, ...data) => callback(...data)
-
-
-/// attr :: Node -> Attribute -> String
-/// ===================================
-/// Returns an Attribute from a Node
-let attr = curry((attr, node) => node.attrs[attr])
-
-
-/// id :: Node -> String
-/// ====================
-/// Shorthand for reading
-/// a Node 'id' Attribute
-let id = node => attr('id', node)
+import { map, prop, mapObjIndexed, values, omit, objOf } from 'ramda'
+import { h3, br, form, input, label, div, main, a, h5, p, route } from 'mythic/markup'
+import { stream, redraw, node, i18n, lex, attr, store, nodeIfElse } from 'mythic/core'
 
 
 /// streamFilm :: Stream
 /// ====================
-// let streamFilm = stream({})
 let streamFilm = store('film')
 
 
@@ -38,7 +18,7 @@ let submit = name => input({ type: "submit", value: name })
 /// ====================================
 /// Renders a editable form input
 let editable = (key, value) => div({ class: 'form-control' }, [
-    label({ for: key }, key),
+    label(objOf("for", key), key),
     br(),
     input({ id: key, name: key, type: "text", value: value }),
     br(),
@@ -53,25 +33,19 @@ let filmNode = film => values(mapObjIndexed((value, key) =>
     editable(key, value), omit(['id', 'people', 'species', 'locations', 'vehicles', 'url'], film)))
 
 
-/// ifElse :: a, b, data -> c | b
-/// =============================
-/// ...
-let ifElse = (a, b, data) => (data ? a(data) : b)
-
-
 /// formNode :: Node -> Node
 /// ========================
 /// Render the Form content
-let formNode = node => form({ id: 'example-form' }, lex(nid => div([
+let formNode = node => form({ id: 'example-form' }, lex(id => div([
     h3("Edit Film"),
-    h5(nid),
-    ifElse(
+    h5(id),
+    nodeIfElse(
         filmNode,
         div(p(i18n("film.text.not-found"))),
-        prop(nid, streamFilm())),
+        prop(id, streamFilm())),
     submit(i18n("shared.save")),
     p(route("ajax", i18n("shared.view-all")))
-    ]), id(node)))
+    ]), attr('id', node)))
 
 
 ////// Node
