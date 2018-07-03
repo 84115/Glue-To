@@ -7,7 +7,7 @@ import api from "mythic/api"
 
 import stream from 'mithril-stream'
 
-import { curry, map, objOf, merge, keys, replace } from 'ramda'
+import { curry, map, objOf, merge, keys, replace, has, prop } from 'ramda'
 import { ul, li, a } from 'mythic/markup'
 
 
@@ -43,4 +43,12 @@ let nodeIfElse = (a, b, data) => (data ? a(data) : b)
 let http = api
 
 
-export { node, mount, redraw, request, route, stream, persist, store, i18n, lex, attr, http, nodeIfElse }
+
+let mergeStreamByKey = (key, opts, store) =>
+	(!has(key, store()) ?
+		store(merge(store(), objOf(key, opts))) :
+		() => [])
+
+let mergeConf = (key, opts) => mergeStreamByKey(key, opts, store('env'))
+
+export { node, mount, redraw, request, route, stream, persist, store, i18n, lex, attr, http, nodeIfElse, mergeStreamByKey, mergeConf }

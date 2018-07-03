@@ -1,14 +1,7 @@
 import * as locale from '../locales'
-import { merge } from 'ramda'
 import store from "mythic/store"
 
-let env = store('env')
-
-if (!(env().i18n) || !(env().i18n.lang))
-{
-	let opts = { "i18n": { "lang": "en" } }
-	env(merge(env(), opts))
-}
+let env = store("env")
 
 let i18n = tag => {
     let defaultLang = "en"
@@ -30,5 +23,6 @@ let i18n = tag => {
 
     return (lookup ? lookup : useDefault(tag))
 }
+
 
 export default i18n
