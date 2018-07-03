@@ -7,15 +7,14 @@ let conf = mergeConf('i18n', {
     "currency": "GBP"
 })
 
-console.log(conf)
 
-let i18n = node => lex(i18n => div([
-    h3(`Currency: ${i18n.currency}`),
-    h4(`Language: ${i18n.lang}`),
+let i18n = node => lex(locale => div([
+    h3(`Currency: ${locale.currency}`),
+    h4(`Language: ${locale.lang}`),
     h6(`Lookup: "${node.attrs.id}"`),
     p(route("conf", "Edit")),
     p(route("", "Home"))
-    ]), prop('i18n', conf))
+    ]), prop('i18n', conf()))
 
 
 export default i18n

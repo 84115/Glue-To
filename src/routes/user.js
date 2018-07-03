@@ -10,7 +10,6 @@ let conf = mergeConf('user', {
 	"age": 32
 })
 
-
 let edit = node => lex(user => div([
     h1(`${user.firstname} ${user.surname}`),
     h4(user.age),

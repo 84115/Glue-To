@@ -46,8 +46,8 @@ let http = api
 
 let mergeStreamByKey = (key, opts, store) =>
 	(!has(key, store()) ?
-		store(merge(store(), objOf(key, opts))) :
-		() => [])
+		store(merge(store(), objOf(key, opts))) && store :
+		store)
 
 let mergeConf = (key, opts) => mergeStreamByKey(key, opts, store('env'))
 
